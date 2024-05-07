@@ -8,13 +8,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=libwebsockets
-PKG_VERSION:=4.3.2
+PKG_VERSION:=4.3.3
 PKG_RELEASE:=3
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 PKG_SOURCE_URL:=https://codeload.github.com/warmcat/libwebsockets/tar.gz/v$(PKG_VERSION)?
-PKG_HASH:=6a85a1bccf25acc7e8e5383e4934c9b32a102880d1e4c37c70b27ae2a42406e1
+PKG_HASH:=6fd33527b410a37ebc91bb64ca51bdabab12b076bc99d153d7c5dd405e4bdf90
 
 PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 
@@ -29,7 +29,7 @@ include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/cmake.mk
 
 CMAKE_OPTIONS += -DLWS_IPV6=$(if $(CONFIG_IPV6),ON,OFF)
-CMAKE_OPTIONS += -DISABLE_WERROR=ON
+CMAKE_OPTIONS += -DDISABLE_WERROR=ON
 CMAKE_OPTIONS += -DCMAKE_BUILD_TYPE=Release
 CMAKE_OPTIONS += -DLWS_WITH_EXTERNAL_POLL=ON
 CMAKE_OPTIONS += -DLWS_WITH_ULOOP=ON
@@ -61,7 +61,7 @@ endef
 define Package/libwebsockets-mbedtls
 	$(call Package/$(PKG_NAME)/Default)
 	TITLE += (mbedTLS)
-	DEPENDS += +libmbedtls
+	DEPENDS += +libmbedtls +@MBEDTLS_VERSION_C
 	VARIANT:=mbedtls
 	PROVIDES:=libwebsockets
 	CONFLICTS:=libwebsockets-openssl
